@@ -3,6 +3,15 @@
            https://api.github.com/users/<your name>
 */
 
+axios.get('https://api.github.com/users/sydneyblom')
+  .then((response) => {
+    console.log(response.data);
+
+  })
+  .catch((error) => {
+    console.log("This is an error", error);
+  })
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,7 +33,8 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const userArray = [ 'sydneyblom', 'tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'
+  ];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -45,11 +55,64 @@ const followersArray = [];
 </div>
 
 */
+userArray.forEach((username) => {
+  axios.get(`https://api.github.com/users/${username}`)
+  .then(data => {
+    const cards = document.querySelector('.cards');
+    console.log(data);
 
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
+function createCard (user) {
+
+
+const card = document.createElement ('div')
+const userImg = document.createElement ('img')
+const cardInfo = document.createElement ('div')
+const name = document.createElement ('h3')
+const username = document.createElement ('div')
+const location = document.createElement ('p')
+const profile = document.createElement ('p')
+const profileLink = document.createElement ('a')
+const followers = document.createElement ('p')
+const following = document.createElement ('p')
+const bio = document.createElement ('p')
+
+
+
+
+
+card.append(userImg);
+card.append(cardInfo);
+
+
+cardInfo.append(name);
+cardInfo.append(username);
+cardInfo.append(location);
+cardInfo.append(profile);
+cardInfo.append(followers);
+cardInfo.append(following);
+cardInfo.append(bio);
+profile.appendChild(profileLink);
+
+
+card.classList.add('card');
+cardInfo.classList.add('card-info');
+name.classList.add('name');
+username.classList.add('username');
+
+userImg.src = user.data.avatar_url;
+name.textContent = user.data.name;
+username.textContent = `${user.data.login}`;
+location.textContent = `${user.data.location}`;
+profileLink.textContent = user.data.url;
+followers.textContent = `Followers: ${user.data.followers}`;
+following.textContent = `Following: ${user.data.following}`;
+bio.textContent = `${user.data.bio}`;
+cards.appendChild(card);
+}
+createCard(data);
+  })
+}
+)
+
+
+
