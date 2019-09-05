@@ -102,11 +102,12 @@ username.classList.add('username');
 userImg.src = user.data.avatar_url;
 name.textContent = user.data.name;
 username.textContent = `${user.data.login}`;
-location.textContent = `${user.data.location}`;
-profileLink.textContent = user.data.url;
+location.textContent =  `Location:${user.data.location}`;
+profileLink.innerHTML = `Profile: <a href= "${user.data.url}">${user.data.url}</a>`;
 followers.textContent = `Followers: ${user.data.followers}`;
 following.textContent = `Following: ${user.data.following}`;
-bio.textContent = `${user.data.bio}`;
+bio.textContent = `Bio: ${user.data.bio}`;
+
 cards.appendChild(card);
 }
 createCard(data);
